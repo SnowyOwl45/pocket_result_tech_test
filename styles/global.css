@@ -1,0 +1,34 @@
+/*HOME PAGE*/
+.mailInput {
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px 0px;
+    border: 1px solid gray;
+}
+.validationButton{
+    background-color: #007BFF;
+    color: white;
+    margin: 20px 0px;
+    padding: 10px 50px;
+    border: none;
+}
+
+.actionToDo{
+    color: black;
+    margin: 0px 5px;
+    padding: 10px;
+    border: none;
+}
+
+.flexCContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.todoRow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 10px;
+}

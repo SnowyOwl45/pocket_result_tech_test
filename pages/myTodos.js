@@ -105,7 +105,7 @@ const myTodos = ({isSmallScreen}) => {
                     <Col sm={12} md={10}>
                         {showNewToDoList && <NewToDoListForm setActiveToDoList={setActiveToDoList} hideNewToDoList={hideNewToDoList} addTodoList={addTodoList} email={email}/>}
                         {!showNewToDoList && todoLists.length !== 0 && <TableToDo addData={addData} modifyContentData={modifyContentData} modifyStatusData={modifyStatusData} deleteData={deleteData} todoList={isActiveTodoList} userData={userData}/>}
-                        {todoLists.length === 0 && <p>Aucune ToDo List pour le moment</p>}
+                        {todoLists.length === 0 && <p style={{margin: '20px 0px', textAlign: 'center', fontStyle: 'italic'}}>Aucune ToDo List pour le moment</p>}
                     </Col>
                 </Row>
             </Container>

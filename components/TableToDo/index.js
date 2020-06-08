@@ -3,6 +3,9 @@ import axios from 'axios';
 import NewToDoForm from '../NewToDoForm';
 import withWindowDimensions from '../withWindowDimensions';
 
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 const TableToDo = ({modifyContentData, modifyStatusData, deleteData, addData, todoList, userData, isSmallScreen}) => {
     const [data, setData] = useState([])
     const [isVisibleNewTodo, setIsVisibleNewTodo] = useState(false)
@@ -69,23 +72,25 @@ const TableToDo = ({modifyContentData, modifyStatusData, deleteData, addData, to
             </button>
             {isVisibleNewTodo && <NewToDoForm addData={addData} todolist={todoList}/> }
             {data.map((todo, index) => {
+                var isModify = (idToModify === todo.id_todo);
                 var contentToShow = todo.status === 'done' ? 
-                    (<div style={{cursor:'pointer'}} onClick={() => toggleStatus(todo)}>
+                    (<div style={{width: '100%', wordBreak: 'normal', overflowWrap: 'anywhere', cursor:'pointer'}} onClick={() => toggleStatus(todo)}>
                         <del>
                             {todo.content}
                         </del>
                     </div>) : 
-                        (<div style={{cursor:'pointer'}} onClick={() => toggleStatus(todo)}>
+                        (<div style={{width: '100%', wordBreak: 'normal', overflowWrap: 'anywhere', cursor:'pointer'}} onClick={() => toggleStatus(todo)}>
                             {todo.content}
                         </div>);
-                if(idToModify === todo.id_todo) contentToShow = (
+                if(isModify) contentToShow = (
                     <>
-                        <input 
+                        <textarea 
+                            style={{width:'80%'}}
                             type="text"
                             value={todoContentToModify}
                             onChange={(e) => setTodoContentToModify(e.target.value)}/>
-                        <button onClick={(e)=> modifyTodo(e)} className="validationButton">
-                            Valider 
+                        <button onClick={(e)=> modifyTodo(e)} className="modificationValidationButton">
+                            {isSmallScreen ? 'OK' : 'Valider'} 
                         </button>
                     </>
                 )
@@ -93,12 +98,12 @@ const TableToDo = ({modifyContentData, modifyStatusData, deleteData, addData, to
                     <div key={todo.id_todo} style={{padding: '10px'}}>
                         {index !== 0 && <div style={{width:'100%', height: '1px', backgroundColor: '#007BFF'}}></div>}
                         <div className="todoRow">
-                            <button onClick={(e) => toggleModificationTodo(todo.id_todo, todo.content, e)} className="actionToDo" style={{backgroundColor: '#ffc107'}}>
-                                Modifier
-                            </button>
-                            <button onClick={(e) => deleteTodo(todo.id_todo, e)}className="actionToDo" style={{backgroundColor: '#dc3545'}}>
-                                Supprimer
-                            </button>
+                            {!isModify && <button onClick={(e) => toggleModificationTodo(todo.id_todo, todo.content, e)} className="actionToDo" style={{backgroundColor: '#ffc107'}}>
+                                {isSmallScreen ? <EditIcon /> : 'Modifier'}
+                            </button>}
+                            {!isModify && <button onClick={(e) => deleteTodo(todo.id_todo, e)}className="actionToDo" style={{backgroundColor: '#dc3545'}}>
+                                {isSmallScreen ? <DeleteIcon /> : 'Supprimer'}
+                            </button>}
                             {contentToShow}
                         </div>
                     </div>

@@ -27,6 +27,7 @@ export default function Ind() {
             <Row>
                 <Col sm={{ span: 10, offset: 1 }} md={{ span: 4, offset: 4 }}>
                     <div className="flexCContainer" style={{marginTop:'100px'}}>
+                        <h4 className="title"> Bienvenue sur MyTodo</h4>
                         <label>
                             Indiquez votre adresse mail : 
                         </label>

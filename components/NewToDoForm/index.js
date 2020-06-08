@@ -11,6 +11,7 @@ const NewToDoForm = ({addData, todolist}) => {
         if(content && todolist.id_todo_list) {
             response = await axios.post(`${hostUrl}/api/todos`, {"id_todo_list": todolist.id_todo_list, "status": "todo", "content": content}, axiosConfig);
             addData({...response.data, "owner": todolist.owner, "name": todolist.name})
+            setContent('')
         }
     }
 

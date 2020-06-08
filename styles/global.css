@@ -27,6 +27,14 @@
     border: none;
 }
 
+.modificationValidationButton{
+    background-color: #007BFF;
+    color: white;
+    margin: 10px 5px;
+    padding: 10px 10px;
+    border: none;
+}
+
 .actionToDo{
     color: black;
     margin: 0px 5px;

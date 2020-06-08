@@ -12,7 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Divider from '@material-ui/core/Divider';
 
-export default function TemporaryDrawer({todoLists}) {
+export default function TemporaryDrawer({isActiveTodoList, showNewToDoList, setIsActiveTodoList, setShowNewToDoList, todoLists}) {
     const [state, setState] = React.useState({
         isOpen: false
     });
@@ -24,18 +24,24 @@ export default function TemporaryDrawer({todoLists}) {
         setState({ isOpen: open });
     };
 
+    const handleClickTab = (todolist) => {
+        setIsActiveTodoList(todolist)
+        setShowNewToDoList(false)
+    }
+
     const list = () => (
         <div style={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)}>
             <List>
             {
-                todoLists.map((todolist)=>
-                    <ListItem className="" button key={todolist.id}>
+                todoLists.map((todolist)=> {
+                    var active = isActiveTodoList.id_todo_list === todolist.id_todo_list 
+                    return (<ListItem onClick={() => handleClickTab(todolist)} button key={todolist.id_todo_list} style={{color: active ? "white" : "black", backgroundColor: active ? "#007BFF" : "white"}}>
                         <ListItemText primary={todolist.name} />
-                    </ListItem>
-                )
+                    </ListItem>)
+                })
             }
             <Divider />
-            <ListItem className="" button key="addNewTodoList">
+            <ListItem onClick={() => setShowNewToDoList(!showNewToDoList)} button key="addNewTodoList">
                 <ListItemIcon><AddIcon /></ListItemIcon>
                 <ListItemText primary="Nouvelle ToDo List" />
             </ListItem>
@@ -48,7 +54,7 @@ export default function TemporaryDrawer({todoLists}) {
             <Button onClick={toggleDrawer(true)}>
                 <MenuIcon style={{color: 'white'}} fontSize='large'/>
             </Button>
-            To Do List
+            {showNewToDoList ? "Création d'un nouvelle todoList" : isActiveTodoList.name}
             <Drawer anchor="left" open={state["isOpen"]} onClose={toggleDrawer(false)}>
                 {list("left")}
             </Drawer>

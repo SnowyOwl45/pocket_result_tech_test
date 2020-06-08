@@ -6,10 +6,23 @@
     margin: 20px 0px;
     border: 1px solid gray;
 }
+
+.title {
+    text-align: center;
+    margin: 50px 0px;
+}
+
 .validationButton{
     background-color: #007BFF;
     color: white;
     margin: 20px 0px;
+    padding: 10px 50px;
+    border: none;
+}
+
+.cancelButton {
+    background-color: #dc3545;
+    color: white;
     padding: 10px 50px;
     border: none;
 }
@@ -31,4 +44,9 @@
     flex-direction: row;
     align-items: center;
     padding-top: 10px;
+}
+
+.listItemMobileSelected {
+    color: white;
+    background-color: #007BFF;
 }

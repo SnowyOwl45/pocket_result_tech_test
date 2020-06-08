@@ -40,7 +40,7 @@ const myTodos = ({isSmallScreen}) => {
             const toDoListsData = responses[1].data
             setUserData(userDataFromQuery)
             setTodoLists(toDoListsData)
-            if(toDoListsData.length) setIsActiveTodoList(toDoListsData[0]);
+            toDoListsData.length ? setIsActiveTodoList(toDoListsData[0]): setShowNewToDoList(true);
             setIsLoading(false);
         }
         if(email) fetchData();
@@ -80,14 +80,14 @@ const myTodos = ({isSmallScreen}) => {
     const setActiveToDoList = (obj) => {
         setIsActiveTodoList(obj)
     }
-    
+
     return (
         <div>
-            {isSmallScreen && <DrawerNav isActiveTodoList={isActiveTodoList} todoLists={todoLists}/>}
+            {isSmallScreen && <DrawerNav isActiveTodoList={isActiveTodoList} showNewToDoList={showNewToDoList} setIsActiveTodoList={setIsActiveTodoList} setShowNewToDoList={setShowNewToDoList} isActiveTodoList={isActiveTodoList} todoLists={todoLists}/>}
             {isLoading && <div>Loading ...</div>}
             <Container fluid>
                 <Row style={{height: '100vh'}}>
-                    {!isSmallScreen && <Col sm={2} style={{backgroundColor: '#007BFF', paddingRight: '0px'}}>
+                    {!isSmallScreen && <Col md={2} style={{backgroundColor: '#007BFF', paddingRight: '0px'}}>
                         <div className="flexCContainer">
                             {todoLists.map((todolist, index) => {
                                     var isActiveTodoListBool = isActiveTodoList.id_todo_list === todolist.id_todo_list
@@ -102,10 +102,10 @@ const myTodos = ({isSmallScreen}) => {
                             </div>
                         </div>
                     </Col>}
-                    <Col sm={10}>
+                    <Col sm={12} md={10}>
                         {showNewToDoList && <NewToDoListForm setActiveToDoList={setActiveToDoList} hideNewToDoList={hideNewToDoList} addTodoList={addTodoList} email={email}/>}
-                        {!showNewToDoList && <TableToDo addData={addData} modifyContentData={modifyContentData} modifyStatusData={modifyStatusData} deleteData={deleteData} todoList={isActiveTodoList} userData={userData}/>}
-                        {userData.length === 0 && <p>Aucune ToDo pour le moment</p>}
+                        {!showNewToDoList && todoLists.length !== 0 && <TableToDo addData={addData} modifyContentData={modifyContentData} modifyStatusData={modifyStatusData} deleteData={deleteData} todoList={isActiveTodoList} userData={userData}/>}
+                        {todoLists.length === 0 && <p>Aucune ToDo List pour le moment</p>}
                     </Col>
                 </Row>
             </Container>

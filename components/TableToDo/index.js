@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NewToDoForm from '../NewToDoForm';
+import withWindowDimensions from '../withWindowDimensions';
 
-const TableToDo = ({modifyContentData, modifyStatusData, deleteData, addData, todoList, userData}) => {
+const TableToDo = ({modifyContentData, modifyStatusData, deleteData, addData, todoList, userData, isSmallScreen}) => {
     const [data, setData] = useState([])
     const [isVisibleNewTodo, setIsVisibleNewTodo] = useState(false)
     const [idToModify, setIdToModify] = useState(0)
@@ -17,8 +18,6 @@ const TableToDo = ({modifyContentData, modifyStatusData, deleteData, addData, to
         let hostUrl = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
         const axiosConfig = {headers: {'Content-Type': 'application/json;charset=UTF-8'}};
         var newStatus = todo.status === 'done' ? 'todo' : 'done';
-        // const nextData = data.map(elt => elt.id_todo === todo.id_todo ? { ...elt, ["status"]: newStatus } : elt);
-        // setData(nextData)
         if(todo.id_todo && newStatus) {
             //modify in database
             await axios.put(`${hostUrl}/api/todos/${todo.id_todo}`, {"status": newStatus}, axiosConfig);
@@ -60,13 +59,13 @@ const TableToDo = ({modifyContentData, modifyStatusData, deleteData, addData, to
     }
 
     return (
-        <div>
-            <h4>{todoList.name}</h4>
+        <div style={{width: isSmallScreen ? '80%' : '50%', marginLeft: isSmallScreen ? '10%' : '25%'}}>
+            <h4 className="title">{todoList.name}</h4>
             {data.length === 0 && <div>
                 Aucun todo pour le moment 
             </div>}
             <button onClick={() => setIsVisibleNewTodo(!isVisibleNewTodo)} className="validationButton">
-                Nouveau todo
+                {isVisibleNewTodo ? "Masquer le bandeau" : "Nouveau todo"}
             </button>
             {isVisibleNewTodo && <NewToDoForm addData={addData} todolist={todoList}/> }
             {data.map((todo, index) => {
@@ -95,10 +94,10 @@ const TableToDo = ({modifyContentData, modifyStatusData, deleteData, addData, to
                         {index !== 0 && <div style={{width:'100%', height: '1px', backgroundColor: '#007BFF'}}></div>}
                         <div className="todoRow">
                             <button onClick={(e) => toggleModificationTodo(todo.id_todo, todo.content, e)} className="actionToDo" style={{backgroundColor: '#ffc107'}}>
-                                Modify
+                                Modifier
                             </button>
                             <button onClick={(e) => deleteTodo(todo.id_todo, e)}className="actionToDo" style={{backgroundColor: '#dc3545'}}>
-                                delete
+                                Supprimer
                             </button>
                             {contentToShow}
                         </div>
@@ -109,4 +108,4 @@ const TableToDo = ({modifyContentData, modifyStatusData, deleteData, addData, to
     )
 }
 
-export default TableToDo;
+export default withWindowDimensions(TableToDo);

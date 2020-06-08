@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import withWindowDimensions from '../withWindowDimensions';
 
-const NewToDoListForm = ({setActiveToDoList, hideNewToDoList, email, addTodoList}) => {
+
+const NewToDoListForm = ({setActiveToDoList, hideNewToDoList, email, addTodoList, isSmallScreen}) => {
     const [listName, setListName] = useState('')
     
     const onSubmitClick = async () => {
@@ -16,9 +18,13 @@ const NewToDoListForm = ({setActiveToDoList, hideNewToDoList, email, addTodoList
         }
     }
 
+    const onCancelClick = () => {
+        hideNewToDoList();
+    }
+
     return (
-        <div className="flexCContainer" style={{width: '50%'}}>
-            <h4>Création nouvelle todolist</h4>
+        <div className="flexCContainer" style={{width: isSmallScreen ? '80%' : '50%', marginLeft: isSmallScreen ? '10%' : '25%'}}>
+            <h4 className="title">Création nouvelle todolist</h4>
             <label> Nom de la toDo Liste :</label>
             <input 
                 type="text"
@@ -27,8 +33,11 @@ const NewToDoListForm = ({setActiveToDoList, hideNewToDoList, email, addTodoList
             <button onClick={onSubmitClick} className="validationButton">
                 Valider 
             </button>
+            <button onClick={onCancelClick} className="cancelButton">
+                Annuler 
+            </button>
         </div>
     )
 }
 
-export default NewToDoListForm;
+export default withWindowDimensions(NewToDoListForm);

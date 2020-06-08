@@ -4,7 +4,7 @@ import axios from 'axios';
 const NewToDoForm = ({addData, todolist}) => {
     const [content, setContent] = useState('')
     
-    const onSubmitClick = async () => {
+    const onSubmitTodo = async () => {
         let hostUrl = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
         const axiosConfig = {headers: {'Content-Type': 'application/json;charset=UTF-8'}};
         var response;
@@ -13,15 +13,22 @@ const NewToDoForm = ({addData, todolist}) => {
             addData({...response.data, "owner": todolist.owner, "name": todolist.name})
         }
     }
+
+    const grabEnter = (e) => {
+        if(e.key === 'Enter') onSubmitTodo()
+    }
+
+
     return (
-        <div className="flexCContainer" style={{width: '50%'}}>
+        <div className="flexCContainer">
             <h4>Création d'un nouveau toDo</h4>
             <label> Description :</label>
             <input 
                 type="text"
                 value={content}
+                onKeyDown={(e) => grabEnter(e)}
                 onChange={(e) => setContent(e.target.value)}/>
-            <button onClick={onSubmitClick} className="validationButton">
+            <button onClick={onSubmitTodo} className="validationButton">
                 Valider 
             </button>
         </div>

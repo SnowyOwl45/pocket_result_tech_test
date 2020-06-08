@@ -67,9 +67,11 @@ const TableToDo = ({modifyContentData, modifyStatusData, deleteData, addData, to
             {data.length === 0 && <div>
                 Aucun todo pour le moment 
             </div>}
-            <button onClick={() => setIsVisibleNewTodo(!isVisibleNewTodo)} className="validationButton">
-                {isVisibleNewTodo ? "Masquer le bandeau" : "Nouveau todo"}
-            </button>
+            <div style={{textAlign: 'center'}}>
+                <button onClick={() => setIsVisibleNewTodo(!isVisibleNewTodo)} className="validationButton">
+                    {isVisibleNewTodo ? "Masquer le bandeau" : "Nouveau todo"}
+                </button>
+            </div>
             {isVisibleNewTodo && <NewToDoForm addData={addData} todolist={todoList}/> }
             {data.map((todo, index) => {
                 var isModify = (idToModify === todo.id_todo);
